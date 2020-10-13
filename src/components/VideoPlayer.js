@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
+import TypeCheckbox from './TypeCheckbox'
+import ModeCheckbox from './ModeCheckbox'
 
 
 class VideoPlayer extends React.Component{
@@ -34,7 +36,8 @@ class VideoPlayer extends React.Component{
                  <ReactPlayer width='480px' height='240px' controls url={this.state.url} />
                  <br/>
                  <div>
-                     <table>
+                     <form>
+                     <table border='1px'>
                          <tr><td><label>Start & End time of the violent scene:</label></td></tr>
                          <tr>
                              <td><input type='text' placeholder='Start time' name='stTime'/></td>
@@ -43,10 +46,15 @@ class VideoPlayer extends React.Component{
                          <tr>
                              <td>Type of violence available</td>
                              <td>
-                               
+                               <TypeCheckbox/>
                             </td>                                
                          </tr>
-                     </table>                     
+                         <tr>
+                             <td>Violence Media</td>
+                             <td><ModeCheckbox/></td>
+                         </tr>
+                     </table>  
+                     </form>                   
                  </div>
             </div>
         )
