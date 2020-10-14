@@ -18,33 +18,33 @@ class App extends Component {
       <form>
       
         <label>
-          Visual
           <input
           type="checkbox"
           name="c1"
           checked={c1}
           onChange={this.onChange}
-        />
+        />        
+        Visual
         </label>
         <br/>
          <label>
-         Auditory
          <input
          type="checkbox"
          name="c2"
          checked={c2}
          onChange={this.onChange}
        />
+       Auditory
        </label>
        <br/>
          <label>
-         Conversation
          <input
          type="checkbox"
          name="c3"
          checked={c3}
          onChange={this.onChange}
        />
+       Conversation
        </label>
        
       {/* <h5>Is it Fighting? : {c1?"Yes":"No"}</h5>
