@@ -2,9 +2,14 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 import TypeCheckbox from './TypeCheckbox'
 import ModeCheckbox from './ModeCheckbox'
+import "../App.css";
+import TimeInput from 'react-time-input';
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox'
 
 
 class VideoPlayer extends React.Component{
+    
     constructor(){
         super();
         this.state ={
@@ -24,37 +29,77 @@ class VideoPlayer extends React.Component{
         event.preventDefault()
         this.setState({[event.target.name]:event.target.value})
     }
+
+    
  
     render(){
         return(
-            <div>
-                <div>
-                    <input type='text' placeholder="Enter URL here" name='urlname' onChange={this.handleInputChange}/>
-                    <button onClick={()=> this.seturl()}>Load</button>
+            <div style={{margin:"20px"}}>
+                <div style={{marginTop:"10px"}}>
+                    <h2 style={{alignContent:"center"}}>Data Input Tool</h2>
                 </div>
-                <br/>
-                 <ReactPlayer width='480px' height='240px' controls url={this.state.url} />
-                 <br/>
+                <div>
+                    <input type='text' placeholder="Enter URL here" name='urlname' onChange={this.handleInputChange} style={{width:"90%"}}/>
+                    <button onClick={()=> this.seturl()}>Load</button>
+               
+                <div style={{marginTop:"10px", marginBottom:"10px"}}>
+                 <ReactPlayer width='700px' height='400px' controls url={this.state.url} />
+                 </div>
+                 </div>
                  <div>
-                     <form>
-                     <table border='1px'>
-                         <tr><td><label>Start & End time of the violent scene:</label></td></tr>
-                         <tr>
-                             <td><input type='text' placeholder='Start time' name='stTime'/></td>
-                             <td><input type='text' placeholder='End time' name='endTime'/></td>
-                         </tr>
-                         <tr>
-                             <td>Type of violence available</td>
-                             <td>
-                               <TypeCheckbox/>
-                            </td>                                
-                         </tr>
-                         <tr>
-                             <td>Violence Media</td>
-                             <td><ModeCheckbox/></td>
-                         </tr>
-                     </table>  
-                     </form>                   
+                     <form noValidate autoComplete="off">
+                        <div>
+                        <label><b>Start & End time of the violent scene:</b></label>
+                        <table style={{marginLeft:"280px"}}>
+                            <tr>
+                                <td>
+                                <TimeInput 
+                                    initTime='00:00'
+                                    ref="TimeInputWrapper"
+                                    className='form-control'
+                                    mountFocus='true'
+                                />
+                                </td>
+                                <td>
+                                <TimeInput 
+                                    initTime='00:00'
+                                    ref="TimeInputWrapper"
+                                    className='form-control'
+                                    mountFocus='true'
+                                />
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        {/* <input style={{padding:"2px", margin:"5px"}} type='text' placeholder='Start time' name='stTime'/>
+                        <input style={{padding:"2px"}} type='text' placeholder='End time' name='endTime'/> */}
+                        </div>
+                         <div>
+                             <div>
+                             <label><b>Type of violence available:</b></label>
+                             </div>
+                             <div className="box-field">
+                             <TypeCheckbox/>
+                             </div>
+                               
+                        </div>     
+
+                        <div>
+                            <div>
+                                <label><b>Violence Media:</b></label>
+                            </div>
+                            <div className="box-field">
+                            <ModeCheckbox/>
+                            </div>
+                        </div> 
+                        <div style={{marginLeft:"50%", marginTop:"10px"}}>
+                        <Button variant="contained" color="primary">
+                            Submit
+                        </Button>
+                        </div>
+                     </form>  
+                     
+                                      
                  </div>
             </div>
         )
