@@ -1,8 +1,11 @@
 from flask import Flask, request, send_file, render_template
 import sqlalchemy as sa
+from flask_cors import CORS
+
+from data import collect_data
 
 app = Flask(__name__)
-
+CORS(app)
 ssl_args = {'ssl': {'ca': 'YOUR_SSL_CERT_PATH'}}
 server = "localhost"
 database = "salondb"
@@ -16,7 +19,7 @@ cnx = engine.connect()
 def hello_world():
     return 'Hello World!'
 
-@app.route('/executedb')
+@app.route('/execute/db')
 def db():
     filename = 'db.sql'
     fd = open(filename, 'r')
@@ -38,9 +41,10 @@ def db():
 @app.route('/collectdata', methods=['POST'])
 def login_salon():
     data = request.get_json(force=True)
-    response = collect_data(login_details, engine)
+    print(data)
+    response = collect_data(data, engine)
     return response
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

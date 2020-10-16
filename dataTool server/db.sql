@@ -8,7 +8,7 @@ DROP DATABASE if exists `tharaka_fyp`;
 
 CREATE DATABASE `tharaka_fyp`;
 
-USE tharka_fyp;
+USE tharaka_fyp;
 
 CREATE TABLE if not exists frame_identification(
 `video_id` int(11) NOT NULL auto_increment,
@@ -17,7 +17,9 @@ CREATE TABLE if not exists frame_identification(
 `start_time` varchar (50),
 `end_time` varchar (50),
 `violence_type` varchar (50),
-`violence_mode` varchar (50),
+`visual` varchar (50),
+`auditory` varchar (50),
+`conversation` varchar (50),
 
 PRIMARY KEY  (`video_id`)
 
