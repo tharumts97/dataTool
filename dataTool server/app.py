@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app)
 ssl_args = {'ssl': {'ca': 'YOUR_SSL_CERT_PATH'}}
 server = "localhost"
-database = "salondb"
+database = "tharaka_fyp"
 db_url = 'mysql://{}@{}/{}'.format("root", server, database)
 print(db_url)
 

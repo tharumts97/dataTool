@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../debug.log" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" />
@@ -97,7 +98,7 @@
       <workItem from="1602690698375" duration="2204000" />
       <workItem from="1602829235645" duration="7628000" />
       <workItem from="1602912223578" duration="118000" />
-      <workItem from="1602913230461" duration="822000" />
+      <workItem from="1602913230461" duration="1739000" />
     </task>
     <servers />
   </component>
