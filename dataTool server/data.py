@@ -1,3 +1,6 @@
+from dicttoxml import dicttoxml
+
+
 def collect_data(request, engine):
     video_name = ''
     video_url = request['url']
@@ -38,3 +41,19 @@ def collect_data(request, engine):
         return {"status": True, "msg": "Insert Success"}
     except Exception as e:
         return {"status": False, "msg": str(e)}
+    
+    
+def generate_xml(engine):
+    sql = "SELECT * FROM frame_identification"
+
+    results = engine.execute(sql)
+    results = [dict(row) for row in results]
+    print(results)
+    xml = dicttoxml(results, custom_root= 'videos', attr_type=False)
+    xml = xml.decode("utf-8")
+    print(type(xml))
+
+    with open("output.xml", "w") as f:
+        f.write(xml)
+
+    return True
