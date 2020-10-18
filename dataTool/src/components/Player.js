@@ -66,7 +66,7 @@ class Player extends React.Component {
         console.log(this.state.violenceType)
     }
 
-    submit(){
+    submit() {
         console.log(this.state.url)
         console.log(this.state.startedTime)
         console.log(this.state.endedTime)
@@ -74,9 +74,9 @@ class Player extends React.Component {
         console.log(this.state.options)
 
         const data = {
-            url : this.state.url,
+            url: this.state.url,
             startedTime: this.state.startedTime,
-            endedTime:this.state.endedTime,
+            endedTime: this.state.endedTime,
             violenceType: this.state.violenceType,
             mediaType: this.state.options
         }
@@ -86,11 +86,11 @@ class Player extends React.Component {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
-        }).then((res) =>{
+        }).then((res) => {
             console.log(res['data'])
-            if(res['data']['status'] === true){
+            if (res['data']['status'] === true) {
                 window.alert("Data Collected Successfully...")
-            }else{
+            } else {
                 window.alert("Something Went Wrong...")
             }
         })
@@ -99,15 +99,38 @@ class Player extends React.Component {
             });
 
 
-        
+
 
 
     }
 
-    generateXml(){
-        console.log("XML will be generated")
-        Axios.get()
-        .then(console.log('inside axios'));
+    generateXml(e) {
+
+        window.open('http://127.0.0.1:5000/genxml', "_blank")
+        // e.preventDefault();
+        // e.persist();
+        // console.log("XML will be generated")
+        // Axios.get('http://127.0.0.1:5000/genxml')
+        //     .then(res => {
+        //         console.log(res)
+        //     })
+        //     .then(console.log('inside axios'));
+    }
+
+    saveAsFile(text, filename) {
+        // Step 1: Create the blob object with the text you received
+        const type = 'application/text'; // modify or get it from response
+        var BlobBuilder = window.WebKitBlobBuilder || window.MozBlobBuilder;
+        const blob = new BlobBuilder([text], { type });
+
+        // Step 2: Create Blob Object URL for that blob
+        const url = URL.createObjectURL(blob);
+
+        // Step 3: Trigger downloading the object using that URL
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click(); // triggering it manually
     }
 
     handleCheckboxChange(checked, option) {
@@ -276,7 +299,7 @@ class Player extends React.Component {
         return (
             <div className='app'>
 
-            {/* </div><div style={{flex:1, flexDirection:'row', marginLeft:'5%'}}> */}
+                {/* </div><div style={{flex:1, flexDirection:'row', marginLeft:'5%'}}> */}
                 <section className='section'>
                     <h1>Data Tool</h1>
                     <div className='player-wrapper'>
@@ -312,99 +335,99 @@ class Player extends React.Component {
                     <h3>Marked Start Time : {this.state.startedTime}</h3>
                     <h3>Marked End Time : {this.state.endedTime}</h3>
                     <div >
-                    <table>
-                        <tbody>
-                        <tr>
-                                <th>Custom URL</th>
-                                <td>
-                                    <input ref={input => { this.urlInput = input }} type='text' placeholder='Enter URL' />
-                                    <button onClick={() => this.setState({ url: this.urlInput.value })}>Load</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Controls</th>
-                                <td>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>Custom URL</th>
+                                    <td>
+                                        <input ref={input => { this.urlInput = input }} type='text' placeholder='Enter URL' />
+                                        <button onClick={() => this.setState({ url: this.urlInput.value })}>Load</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Controls</th>
+                                    <td>
 
-                                    <button onClick={this.handleStop}>Stop</button>
-                                    <button onClick={this.handlePlayPause}>{playing ? 'Pause' : 'Play'}</button>
-                                    <button onClick={() => this.handleMarkedStartedTime(duration, played)}>{this.state.markedStartedTime ? this.state.startedTime : 'Mark Start Time'}</button>
-                                    <button onClick={() => this.handleMarkedEndedTime(duration, played)}>{this.state.markedEndedTime ? this.state.endedTime : 'Mark End Time'}</button>
-                                    <button onClick={this.handleClickFullscreen}>Fullscreen</button>
-                                    {light &&
-                                        <button onClick={() => this.player.showPreview()}>Show preview</button>}
-                                    {ReactPlayer.canEnablePIP(url) &&
-                                        <button onClick={this.handleTogglePIP}>{pip ? 'Disable PiP' : 'Enable PiP'}</button>}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Speed</th>
-                                <td>
-                                    <button onClick={this.handleSetPlaybackRate} value={1}>1x</button>
-                                    <button onClick={this.handleSetPlaybackRate} value={1.5}>1.5x</button>
-                                    <button onClick={this.handleSetPlaybackRate} value={2}>2x</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Seek</th>
-                                <td>
-                                    <input
-                                        type='range' min={0} max={0.999999} step='any'
-                                        value={played}
-                                        onMouseDown={this.handleSeekMouseDown}
-                                        onChange={this.handleSeekChange}
-                                        onMouseUp={this.handleSeekMouseUp}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Volume</th>
-                                <td>
-                                    <input type='range' min={0} max={1} step='any' value={volume} onChange={this.handleVolumeChange} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <label htmlFor='controls'>Controls</label>
-                                </th>
-                                <td>
-                                    <input id='controls' type='checkbox' checked={controls} onChange={this.handleToggleControls} />
-                                    <em>&nbsp; Requires player reload</em>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <label htmlFor='muted'>Muted</label>
-                                </th>
-                                <td>
-                                    <input id='muted' type='checkbox' checked={muted} onChange={this.handleToggleMuted} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <label htmlFor='loop'>Loop</label>
-                                </th>
-                                <td>
-                                    <input id='loop' type='checkbox' checked={loop} onChange={this.handleToggleLoop} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <label htmlFor='light'>Light mode</label>
-                                </th>
-                                <td>
-                                    <input id='light' type='checkbox' checked={light} onChange={this.handleToggleLight} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Played</th>
-                                <td><progress max={1} value={played} /></td>
-                            </tr>
-                            <tr>
-                                <th>Loaded</th>
-                                <td><progress max={1} value={loaded} /></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                        <button onClick={this.handleStop}>Stop</button>
+                                        <button onClick={this.handlePlayPause}>{playing ? 'Pause' : 'Play'}</button>
+                                        <button onClick={() => this.handleMarkedStartedTime(duration, played)}>{this.state.markedStartedTime ? this.state.startedTime : 'Mark Start Time'}</button>
+                                        <button onClick={() => this.handleMarkedEndedTime(duration, played)}>{this.state.markedEndedTime ? this.state.endedTime : 'Mark End Time'}</button>
+                                        <button onClick={this.handleClickFullscreen}>Fullscreen</button>
+                                        {light &&
+                                            <button onClick={() => this.player.showPreview()}>Show preview</button>}
+                                        {ReactPlayer.canEnablePIP(url) &&
+                                            <button onClick={this.handleTogglePIP}>{pip ? 'Disable PiP' : 'Enable PiP'}</button>}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Speed</th>
+                                    <td>
+                                        <button onClick={this.handleSetPlaybackRate} value={1}>1x</button>
+                                        <button onClick={this.handleSetPlaybackRate} value={1.5}>1.5x</button>
+                                        <button onClick={this.handleSetPlaybackRate} value={2}>2x</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Seek</th>
+                                    <td>
+                                        <input
+                                            type='range' min={0} max={0.999999} step='any'
+                                            value={played}
+                                            onMouseDown={this.handleSeekMouseDown}
+                                            onChange={this.handleSeekChange}
+                                            onMouseUp={this.handleSeekMouseUp}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Volume</th>
+                                    <td>
+                                        <input type='range' min={0} max={1} step='any' value={volume} onChange={this.handleVolumeChange} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label htmlFor='controls'>Controls</label>
+                                    </th>
+                                    <td>
+                                        <input id='controls' type='checkbox' checked={controls} onChange={this.handleToggleControls} />
+                                        <em>&nbsp; Requires player reload</em>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label htmlFor='muted'>Muted</label>
+                                    </th>
+                                    <td>
+                                        <input id='muted' type='checkbox' checked={muted} onChange={this.handleToggleMuted} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label htmlFor='loop'>Loop</label>
+                                    </th>
+                                    <td>
+                                        <input id='loop' type='checkbox' checked={loop} onChange={this.handleToggleLoop} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label htmlFor='light'>Light mode</label>
+                                    </th>
+                                    <td>
+                                        <input id='light' type='checkbox' checked={light} onChange={this.handleToggleLight} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Played</th>
+                                    <td><progress max={1} value={played} /></td>
+                                </tr>
+                                <tr>
+                                    <th>Loaded</th>
+                                    <td><progress max={1} value={loaded} /></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </section>
                 <section className='section'>
@@ -422,57 +445,57 @@ class Player extends React.Component {
                       {this.renderLoadButton('http://dash.edgesuite.net/envivio/EnvivioDash3/manifest.mpd', 'DASH (mpd)')}
                     </td>
                   </tr> */}
-                            
+
                         </tbody>
                     </table>
                     <div>
-                    <h2>Playing Data</h2>
+                        <h2>Playing Data</h2>
 
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th>url</th>
-                                <td className={!url ? 'faded' : ''}>
-                                    {(url instanceof Array ? 'Multiple' : url) || 'null'}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>playing</th>
-                                <td>{playing ? 'true' : 'false'}</td>
-                            </tr>
-                            <tr>
-                                <th>volume</th>
-                                <td>{volume.toFixed(3)}</td>
-                            </tr>
-                            <tr>
-                                <th>played</th>
-                                <td>{played.toFixed(3)}</td>
-                            </tr>
-                            <tr>
-                                <th>loaded</th>
-                                <td>{loaded.toFixed(3)}</td>
-                            </tr>
-                            <tr>
-                                <th>duration</th>
-                                <td><Duration seconds={duration} /></td>
-                            </tr>
-                            <tr>
-                                <th>elapsed</th>
-                                <td><Duration seconds={duration * played} /></td>
-                            </tr>
-                            <tr>
-                                <th>remaining</th>
-                                <td><Duration seconds={duration * (1 - played)} /></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>url</th>
+                                    <td className={!url ? 'faded' : ''}>
+                                        {(url instanceof Array ? 'Multiple' : url) || 'null'}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>playing</th>
+                                    <td>{playing ? 'true' : 'false'}</td>
+                                </tr>
+                                <tr>
+                                    <th>volume</th>
+                                    <td>{volume.toFixed(3)}</td>
+                                </tr>
+                                <tr>
+                                    <th>played</th>
+                                    <td>{played.toFixed(3)}</td>
+                                </tr>
+                                <tr>
+                                    <th>loaded</th>
+                                    <td>{loaded.toFixed(3)}</td>
+                                </tr>
+                                <tr>
+                                    <th>duration</th>
+                                    <td><Duration seconds={duration} /></td>
+                                </tr>
+                                <tr>
+                                    <th>elapsed</th>
+                                    <td><Duration seconds={duration * played} /></td>
+                                </tr>
+                                <tr>
+                                    <th>remaining</th>
+                                    <td><Duration seconds={duration * (1 - played)} /></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </section>
                 <div>
                     <form>
                         <br />
                         <label>
-                        <b> Type of violence available:</b>
+                            <b> Type of violence available:</b>
                         </label>
 
                         <div>
@@ -525,7 +548,7 @@ class Player extends React.Component {
                             </div>
                         </div>
                         <div>
-                        <label><b>Violence Media:</b></label>
+                            <label><b>Violence Media:</b></label>
                             {
                                 this.state.options.map(option => {
                                     return (
@@ -537,15 +560,15 @@ class Player extends React.Component {
 
                     </form>
 
-                    <div style={{marginLeft:"40%", marginTop:"10px"}}>
-                        <Button style={{marginRight:"5%"}} onClick={this.submit.bind(this)} variant="contained" color="primary">
+                    <div style={{ marginLeft: "40%", marginTop: "10px" }}>
+                        <Button style={{ marginRight: "5%" }} onClick={this.submit.bind(this)} variant="contained" color="primary">
                             Submit
                         </Button>
-                       
+
                         <Button onClick={this.generateXml.bind(this)} variant="contained" color="primary">
                             Generate XML
                         </Button>
-                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -560,9 +583,9 @@ export default Player;
 const CheckboxField = ({ checked, onChange, label }) => {
     return (
         <div>
-                                    <label>
-                           {label}
-                        </label>
+            <label>
+                {label}
+            </label>
             <input type="checkbox" checked={checked} onChange={ev => onChange(ev.target.checked)} />
         </div>
     );

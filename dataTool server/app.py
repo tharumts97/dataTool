@@ -48,7 +48,7 @@ def login_salon():
 @app.route('/genxml', methods=['GET'])
 def gen_xml():
     response = generate_xml(engine)
-    return send_file('output.xml')
+    return send_file('output.xml', mimetype="text/xml", as_attachment=True)
 
 
 if __name__ == '__main__':
