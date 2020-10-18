@@ -537,7 +537,7 @@ class Player extends React.Component {
 
                     </form>
 
-                    <div style={{marginLeft:"50%", marginTop:"10px"}}>
+                    <div style={{marginLeft:"40%", marginTop:"10px"}}>
                         <Button style={{marginRight:"5%"}} onClick={this.submit.bind(this)} variant="contained" color="primary">
                             Submit
                         </Button>
