@@ -2,7 +2,7 @@ from flask import Flask, request, send_file, render_template
 import sqlalchemy as sa
 from flask_cors import CORS
 
-from data import collect_data
+from data import collect_data, generate_xml
 
 app = Flask(__name__)
 CORS(app)
@@ -44,6 +44,11 @@ def login_salon():
     print(data)
     response = collect_data(data, engine)
     return response
+
+@app.route('/genxml', methods=['GET'])
+def gen_xml():
+    response = generate_xml(engine)
+    return send_file('output.xml', mimetype="text/xml", as_attachment=True)
 
 
 if __name__ == '__main__':
