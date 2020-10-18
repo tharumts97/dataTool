@@ -104,6 +104,12 @@ class Player extends React.Component {
 
     }
 
+    generateXml(){
+        console.log("XML will be generated")
+        Axios.get()
+        .then(console.log('inside axios'));
+    }
+
     handleCheckboxChange(checked, option) {
         const { options } = this.state;
 
@@ -269,18 +275,21 @@ class Player extends React.Component {
 
         return (
             <div className='app'>
+
+            {/* </div><div style={{flex:1, flexDirection:'row', marginLeft:'5%'}}> */}
                 <section className='section'>
                     <h1>Data Tool</h1>
                     <div className='player-wrapper'>
                         <ReactPlayer
                             ref={this.ref}
                             className='react-player'
-                            width='100%'
-                            height='100%'
+                            width='700px'
+                            height='400px'
+                            controls
                             url={url}
                             pip={pip}
                             playing={playing}
-                            controls={controls}
+                            //controls={controls}
                             light={light}
                             loop={loop}
                             playbackRate={playbackRate}
@@ -302,8 +311,16 @@ class Player extends React.Component {
                     </div>
                     <h3>Marked Start Time : {this.state.startedTime}</h3>
                     <h3>Marked End Time : {this.state.endedTime}</h3>
+                    <div >
                     <table>
                         <tbody>
+                        <tr>
+                                <th>Custom URL</th>
+                                <td>
+                                    <input ref={input => { this.urlInput = input }} type='text' placeholder='Enter URL' />
+                                    <button onClick={() => this.setState({ url: this.urlInput.value })}>Load</button>
+                                </td>
+                            </tr>
                             <tr>
                                 <th>Controls</th>
                                 <td>
@@ -388,6 +405,7 @@ class Player extends React.Component {
                             </tr>
                         </tbody>
                     </table>
+                    </div>
                 </section>
                 <section className='section'>
                     <table>
@@ -404,16 +422,10 @@ class Player extends React.Component {
                       {this.renderLoadButton('http://dash.edgesuite.net/envivio/EnvivioDash3/manifest.mpd', 'DASH (mpd)')}
                     </td>
                   </tr> */}
-                            <tr>
-                                <th>Custom URL</th>
-                                <td>
-                                    <input ref={input => { this.urlInput = input }} type='text' placeholder='Enter URL' />
-                                    <button onClick={() => this.setState({ url: this.urlInput.value })}>Load</button>
-                                </td>
-                            </tr>
+                            
                         </tbody>
                     </table>
-
+                    <div>
                     <h2>Playing Data</h2>
 
                     <table>
@@ -454,6 +466,7 @@ class Player extends React.Component {
                             </tr>
                         </tbody>
                     </table>
+                    </div>
                 </section>
                 <div>
                     <form>
@@ -525,8 +538,12 @@ class Player extends React.Component {
                     </form>
 
                     <div style={{marginLeft:"50%", marginTop:"10px"}}>
-                        <Button onClick={this.submit.bind(this)} variant="contained" color="primary">
+                        <Button style={{marginRight:"5%"}} onClick={this.submit.bind(this)} variant="contained" color="primary">
                             Submit
+                        </Button>
+                       
+                        <Button onClick={this.generateXml.bind(this)} variant="contained" color="primary">
+                            Generate XML
                         </Button>
                         </div>
 
