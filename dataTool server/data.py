@@ -26,7 +26,8 @@ def collect_data(request, engine):
     else:
         conversation = 'no'
 
-
+    genxml=[{'video_url': video_url, 'start_time': start_time, 'end_time':  end_time, 'violence_type': violence_type, 'visual': visual, 'auditory': auditory,
+             'conversation': conversation}]
 
     try:
 
@@ -38,6 +39,7 @@ def collect_data(request, engine):
         print(sql_insert)
 
         result = engine.execute(sql_insert)
+        gensinglexml(genxml)
         return {"status": True, "msg": "Insert Success"}
     except Exception as e:
         return {"status": False, "msg": str(e)}
@@ -52,8 +54,23 @@ def generate_xml(engine):
     xml = dicttoxml(results, custom_root= 'videos', attr_type=False)
     xml = xml.decode("utf-8")
     print(type(xml))
+    open('output.xml', 'w').close()
+    with open("output.xml", "w") as f:
+
+        f.truncate(0)
+        f.write(xml)
+
+    return True
+
+
+def gensinglexml(results):
+    print(results)
+    xml = dicttoxml(results, custom_root= 'videos', attr_type=False)
+    xml = xml.decode("utf-8")
+    print(type(xml))
 
     with open("output.xml", "w") as f:
+        f.truncate(0)
         f.write(xml)
 
     return True

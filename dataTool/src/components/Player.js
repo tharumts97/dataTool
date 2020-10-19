@@ -90,6 +90,7 @@ class Player extends React.Component {
             console.log(res['data'])
             if (res['data']['status'] === true) {
                 window.alert("Data Collected Successfully...")
+                window.open('http://127.0.0.1:5000/gensingle', "_blank")
             } else {
                 window.alert("Something Went Wrong...")
             }

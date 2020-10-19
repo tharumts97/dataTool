@@ -50,6 +50,10 @@ def gen_xml():
     response = generate_xml(engine)
     return send_file('output.xml', mimetype="text/xml", as_attachment=True)
 
+@app.route('/gensingle', methods=['GET'])
+def gen_single_xml():
+    return send_file('output.xml', mimetype="text/xml", as_attachment=True)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
